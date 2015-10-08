@@ -2,7 +2,7 @@
 use Slim\Slim; // namespace/class
 use Noodlehaus\Config;  //hassankhan
 use MyProject\User\User;
-
+use Slim\Views\Twig;
 /* Turn off server's headers Cache-Control, Pragma, Expires denied browsers cashing */
 session_cache_limiter(false);
 session_start();
@@ -14,7 +14,9 @@ define('INC_ROOT', dirname(__DIR__));
 require INC_ROOT."/vendor/autoload.php";
 
 $app = new Slim([
-    'mode' => file_get_contents(INC_ROOT . '/mode.php')
+    'mode' => file_get_contents(INC_ROOT . '/mode.php'),
+    'view' => new Twig,
+    'templates.path' => INC_ROOT . '/app/views'
 ]);
 //$app->config('mode');
 $app->configureMode($app->config('mode'), function() use ($app){
@@ -35,4 +37,6 @@ $app->container->set('user', function(){
     return new User;
 });
 
-var_dump($app->user);
+$app->get('/', function() use ($app){
+    $app->render('home.php');
+});
