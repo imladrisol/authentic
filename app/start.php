@@ -49,5 +49,5 @@ $view->parserOptions = [
     'debug' => $app->config->get('twig.debug')
 ];
 $view->parserExtensions = [
-    new TwigExtension()
+    new TwigExtension() // for views
 ];
