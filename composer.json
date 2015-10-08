@@ -1,4 +1,9 @@
 {
+    "autoload": {
+        "psr-4" : {
+            "MyProject\\" : "app/MyProject"
+        }
+    },
     "require": {
         "slim/slim": "~2.0",
         "slim/views": "0.1.*",
