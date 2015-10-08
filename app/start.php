@@ -4,7 +4,7 @@ use Noodlehaus\Config;  //hassankhan
 use MyProject\User\User;
 use Slim\Views\Twig;
 use Slim\Views\TwigExtension;
-
+use MyProject\Helpers\Hash;
 /* Turn off server's headers Cache-Control, Pragma, Expires denied browsers cashing */
 session_cache_limiter(false);
 session_start();
@@ -40,6 +40,10 @@ $app->container->set('user', function(){
     return new User;
 });
 
+$app->container->singleton('hash', function() use ($app){
+    return new Hash($app->config);
+});
+
 //$app->get('/', function() use ($app){
 //    $app->render('home.php');
 //});
@@ -51,3 +55,8 @@ $view->parserOptions = [
 $view->parserExtensions = [
     new TwigExtension() // for views
 ];
+
+
+$password = "aaa";
+$hash = $app->hash->password($password);
+var_dump($app->hash->passwordCheck($password, $hash));
