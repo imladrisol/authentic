@@ -3,6 +3,8 @@ use Slim\Slim; // namespace/class
 use Noodlehaus\Config;  //hassankhan
 use MyProject\User\User;
 use Slim\Views\Twig;
+use Slim\Views\TwigExtension;
+
 /* Turn off server's headers Cache-Control, Pragma, Expires denied browsers cashing */
 session_cache_limiter(false);
 session_start();
@@ -32,11 +34,20 @@ $app->configureMode($app->config('mode'), function() use ($app){
 
 
 require 'database.php';
+require 'routes.php';
 
 $app->container->set('user', function(){
     return new User;
 });
 
-$app->get('/', function() use ($app){
-    $app->render('home.php');
-});
+//$app->get('/', function() use ($app){
+//    $app->render('home.php');
+//});
+
+$view = $app->view();
+$view->parserOptions = [
+    'debug' => $app->config->get('twig.debug')
+];
+$view->parserExtensions = [
+    new TwigExtension()
+];
