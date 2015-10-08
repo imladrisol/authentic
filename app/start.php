@@ -27,3 +27,5 @@ $app->get('/test/:name', function($name){
     echo "Hello {$name}";
 });
 */
+
+require 'database.php';
